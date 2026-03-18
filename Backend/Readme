@@ -1,0 +1,119 @@
+# System Architecture
+
+User (Website Chatbox)
+        │
+        ▼
+Frontend (React / JS widget)
+        │
+        ▼
+Agent API (FastAPI / Node)
+        │
+        ▼
+LangGraph Agent
+        │
+        ├── Tool: search_product()
+        ├── Tool: add_to_cart()
+        ├── Tool: remove_from_cart()
+        └── Tool: checkout()
+        │
+        ▼
+Database / E-commerce Backend
+
+
+#  High Level Architecture
+
+                ┌───────────────────────────┐
+                │        React Website      │
+                │  (Product UI + Chat UI)   │
+                └─────────────┬─────────────┘
+                              │ REST API
+                              ▼
+                    ┌──────────────────┐
+                    │    FastAPI API   │
+                    │  Auth + Business │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┴──────────────┐
+              ▼                             ▼
+     Ecommerce Services               AI Agent Service
+ (Products, Cart, Orders)         (LangChain + LangGraph)
+              │                             │
+              ▼                             ▼
+         Database                    Tool Functions
+     (Postgres/MongoDB)        (add_to_cart, search_product)
+
+
+#Project Folder Structure
+
+ecommerce-ai-agent/
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   │
+│   │   ├── database/
+│   │   │   ├── db.py
+│   │   │   └── models.py
+│   │   │
+│   │   ├── routes/
+│   │   │   ├── products.py
+│   │   │   ├── cart.py
+│   │   │   ├── orders.py
+│   │   │   └── agent.py
+│   │   │
+│   │   ├── services/
+│   │   │   ├── product_service.py
+│   │   │   ├── cart_service.py
+│   │   │   └── order_service.py
+│   │   │
+│   │   └── agent/
+│   │       ├── tools.py
+│   │       ├── graph.py
+│   │       └── prompts.py
+│
+└── frontend/
+    ├── src/
+    │   ├── pages/
+    │   ├── components/
+    │   └── agent-chat/
+
+
+
+# Database Design
+
+Example tables.
+
+# Users
+
+id
+name
+email
+password
+created_at
+
+
+# Products
+
+id
+name
+price
+stock
+description
+category
+image
+
+# Cart
+
+id
+user_id
+product_id
+quantity
+
+# Orders
+
+id
+user_id
+total_price
+status
+created_at
