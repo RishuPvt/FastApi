@@ -60,6 +60,7 @@ def add_to_cart(data: str):
 
     return f"{quantity} item(s) added to cart"
 
+# SUCESSFULLY
 @tool
 def remove_from_cart(data: str):
     """
@@ -84,20 +85,7 @@ def remove_from_cart(data: str):
 
     return "Product removed from cart"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# SUCESSFULLY
 @tool
 def view_cart(user_id: str):
     """View all products in the user's cart. Input format: user_id"""
@@ -123,7 +111,6 @@ def view_cart(user_id: str):
 
 
 # SUCESSFULLY
-
 @tool
 def update_cart_quantity(data: str):
     """
