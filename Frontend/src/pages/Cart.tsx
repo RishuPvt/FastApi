@@ -3,7 +3,7 @@ import { Trash2, ShoppingBag } from 'lucide-react';
 import { api } from '../services/api';
 import type { CartItem } from '../services/api';
 
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/Authcontext';
 
 export function Cart() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);

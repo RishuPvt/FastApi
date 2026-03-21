@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
+import { AuthProvider } from './context/Authcontext';
 import { Navbar } from './component/Navbar';
 import { ProtectedRoute } from './component/ProtectedRoutes';
 import { Products } from './pages/Product';

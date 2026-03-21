@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ShoppingCart, User, LogOut, Package, MessageSquare } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/Authcontext';
 
 export function Navbar() {
   const { user, logout } = useAuth();

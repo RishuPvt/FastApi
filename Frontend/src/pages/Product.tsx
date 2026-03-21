@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Search, ShoppingCart } from 'lucide-react';
 import { api} from '../services/api';
 import type { Product } from '../services/api';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/Authcontext';
 
 
 export function Products() {
@@ -60,7 +60,7 @@ const loadProducts = async () => {
       return;
     }
     try {
-      await api.addToCart(productId, 1);
+      await api.addToCart(productId, 1, user.id);;
       alert('Added to cart successfully!');
     } catch (error) {
       console.error('Failed to add to cart:', error);

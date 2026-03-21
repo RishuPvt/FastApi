@@ -103,15 +103,20 @@ class ApiService {
     return response.json();
   }
 
-  async addToCart(productId: number, quantity: number = 1) {
-    const response = await fetch(`${API_BASE_URL}/cart/add`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify({ product_id: productId, quantity }),
-    });
-    if (!response.ok) throw new Error('Failed to add to cart');
-    return response.json();
-  }
+ async addToCart(productId: number, quantity: number = 1, userId: number) {
+  const response = await fetch(`${API_BASE_URL}/cart/add`, {
+    method: 'POST',
+    headers: this.getAuthHeaders(),
+    body: JSON.stringify({
+      user_id: userId,          
+      product_id: productId,
+      quantity
+    }),
+  });
+
+  if (!response.ok) throw new Error('Failed to add to cart');
+  return response.json();
+}
 
   async removeFromCart(cartItemId: number) {
     const response = await fetch(`${API_BASE_URL}/cart/remove/${cartItemId}`, {
@@ -122,15 +127,16 @@ class ApiService {
     return response.json();
   }
 
-  async chatWithAgent(message: string) {
-    const response = await fetch(`${API_BASE_URL}/agent`, {
-      method: 'POST',
-      headers: this.getAuthHeaders(),
-      body: JSON.stringify({ message }),
-    });
-    if (!response.ok) throw new Error('Failed to get agent response');
-    return response.json();
-  }
+ async chatWithAgent(message: string) {
+  const response = await fetch(`${API_BASE_URL}/agent`, {
+    method: 'POST',
+    headers: this.getAuthHeaders(),
+    body: JSON.stringify({ message: message })
+  });
+
+  if (!response.ok) throw new Error('Failed to get agent response');
+  return response.json();
+}
 }
 
 export const api = new ApiService();

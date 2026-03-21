@@ -49,13 +49,13 @@ export function Agent() {
       const response = await api.chatWithAgent(inputText);
       const agentMessage: Message = {
         id: Date.now() + 1,
-        text: response.response || response.message || 'I received your message!',
+        text:response.response?.output ||response.output ||response.response ||'I received your message!',
         isUser: false,
         timestamp: new Date(),
       };
       setMessages((prev) => [...prev, agentMessage]);
     } catch (error) {
-      console.error('Failed to get agent response:', error);
+      console.error('Failed to get agent response:', error);   
       const errorMessage: Message = {
         id: Date.now() + 1,
         text: 'Sorry, I encountered an error. Please try again.',
