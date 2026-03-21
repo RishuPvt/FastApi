@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from models.cart_model import Cart
 from database.db import SessionLocal
-
+from sqlalchemy.orm import joinedload
+from schemas.Cart_schema import AddToCartRequest , CartResponse
 router = APIRouter()
 
 def get_db():
@@ -13,12 +14,14 @@ def get_db():
         db.close()
 
 @router.post("/cart/add")
-def add_to_cart(user_id: int, product_id: int, quantity: int, db: Session = Depends(get_db)):
+def add_to_cart(data: AddToCartRequest, db: Session = Depends(get_db)):
+
+    print("DATA RECEIVED:", data)  # 🔥 debug
 
     cart = Cart(
-        user_id=user_id,
-        product_id=product_id,
-        quantity=quantity
+        user_id=data.user_id,
+        product_id=data.product_id,
+        quantity=data.quantity
     )
 
     db.add(cart)
@@ -26,10 +29,16 @@ def add_to_cart(user_id: int, product_id: int, quantity: int, db: Session = Depe
 
     return {"message": "Added to cart"}
 
-@router.get("/cart/{user_id}")
+
+@router.get("/cart/{user_id}", response_model=list[CartResponse])
 def view_cart(user_id: int, db: Session = Depends(get_db)):
 
-    cart_items = db.query(Cart).filter(Cart.user_id == user_id).all()
+    cart_items = (
+        db.query(Cart)
+        .options(joinedload(Cart.product))
+        .filter(Cart.user_id == user_id)
+        .all()
+    )
 
     return cart_items
 

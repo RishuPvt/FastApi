@@ -9,3 +9,4 @@ class ProductSchema(BaseModel):
 
     class Config:
         from_attributes = True   # ✅ for SQLAlchemy (IMPORTANT)
+
